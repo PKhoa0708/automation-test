@@ -2,10 +2,10 @@ name: Playwright Tests
 on:
   # Tự động chạy test mỗi khi bạn push code lên nhánh main hoặc master
   push:
-    branches: [ main, master ]
+    branches: [ main, master, khoa ]
   # Tự động chạy test khi có người tạo Pull Request vào nhánh main hoặc master
   pull_request:
-    branches: [ main, master ]
+    branches: [ main, master, khoa ]
 
 jobs:
   test:
