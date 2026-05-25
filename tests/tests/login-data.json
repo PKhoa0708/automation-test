@@ -1,0 +1,49 @@
+[
+  {
+    "CaseName": "TC01: Sai thông tin đăng nhập",
+    "Email": "invalid@gmail.com",
+    "Password": "ahhhhhh",
+    "ExpectedError": "Email hoặc mật khẩu không đúng"
+  },
+  {
+    "CaseName": "TC02: Sai định dạng Email",
+    "Email": "admin@aaa.com",
+    "Password": "111",
+    "ExpectedError": "Email hoặc mật khẩu không đúng"
+  },
+  {
+    "CaseName": "TC03: Đúng email, sai pass",
+    "Email": "tester123@gmail.com",
+    "Password": "mat_khau_sai_hoan_toan",
+    "Type": "server_error",
+    "ExpectedError": "Email hoặc mật khẩu không đúng"
+  },
+  {
+    "CaseName": "TC04: Đúng pass, sai email",
+    "Email": "email_chua_dang_ky@gmail.com",
+    "Password": "123456",
+    "Type": "server_error",
+    "ExpectedError": "Email hoặc mật khẩu không đúng"
+  },
+  {
+    "CaseName": "TC05: Bỏ trống email",
+    "Email": "",
+    "Password": "123456",
+    "Type": "validation_error",
+    "ExpectedError": ""
+  },
+  {
+    "CaseName": "TC06: Bỏ trống pass",
+    "Email": "tester123@gmail.com",
+    "Password": "",
+    "Type": "validation_error",
+    "ExpectedError": ""
+  },
+  {
+    "CaseName": "TC07: Đăng nhập thành công",
+    "Email": "nguyenvana@gmail.com",
+    "Password": "111111",
+    "Type": "success",
+    "ExpectedError": ""
+  }
+]
