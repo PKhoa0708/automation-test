@@ -33,7 +33,7 @@ for (const data of loginData) {
         } else if (data.Type === 'success') {
             // Nếu đăng nhập thành công: URL chuyển về trang chủ, và thấy nút Đăng xuất
             await expect(page).toHaveURL('https://banve.my-board.org/dashboards/tourist.php');
-            const logoutBtn = page.locator('text=Đăng xuất');
+            const logoutBtn = page.locator('text=Đăng xuất').first();
             await expect(logoutBtn).toBeVisible();
         }
     });
