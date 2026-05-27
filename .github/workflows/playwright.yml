@@ -25,7 +25,7 @@ jobs:
       run: npx playwright install --with-deps # Tải trình duyệt ẩn và thư viện hệ thống đi kèm
 
     - name: Run Playwright tests
-      run: npx playwright test # Chạy toàn bộ các file test
+      run: npx playwright test --project=chromium # Chạy toàn bộ các file test
 
     - name: Upload Playwright Report
       uses: actions/upload-artifact@v4 # Tải file báo cáo kết quả test lên GitHub
