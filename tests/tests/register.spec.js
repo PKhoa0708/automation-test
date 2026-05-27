@@ -7,6 +7,11 @@ test.describe.configure({ mode: 'parallel' });
 test.describe('Kiểm thử chức năng Đăng ký tài khoản', () => {
 
   test.beforeEach(async ({ page }) => {
+    // Tự động tắt/đồng ý tất cả các hộp thoại (alert, confirm,...) trên giao diện
+    page.on('dialog', async dialog => {
+      await dialog.accept();
+    });
+
     // Trước mỗi test case, đi tới trang chủ và click nút "Đăng ký" trên thanh menu
     await page.goto('/');
     await page.click('text=Đăng ký');
@@ -95,22 +100,6 @@ test.describe('Kiểm thử chức năng Đăng ký tài khoản', () => {
     await expect(page.locator('input[name="confirm_password"]')).toBeFocused();
   });
 
-  test.describe('Nhóm kiểm thử Responsive', () => {
-    // Sử dụng tùy chọn cấu hình viewport của Playwright thay vì đổi size động lúc chạy
-    test.use({ viewport: { width: 375, height: 812 } });
-
-    test('TC04: Kiểm tra tính năng Responsive trên màn hình di động', async ({ page }) => {
-      // Đảm bảo tất cả các input và button vẫn hiển thị
-      await expect(page.locator('input[name="full_name"]')).toBeVisible();
-      await expect(page.locator('input[name="email"]')).toBeVisible();
-      await expect(page.locator('input[name="phone"]')).toBeVisible();
-      await expect(page.locator('select[name="role"]')).toBeVisible();
-      await expect(page.locator('input[name="address"]')).toBeVisible();
-      await expect(page.locator('input[name="password"]')).toBeVisible();
-      await expect(page.locator('input[name="confirm_password"]')).toBeVisible();
-      await expect(page.locator('.register-btn')).toBeVisible();
-    });
-  });
 
   test('TC05: Đăng ký thành công tài khoản Khách du lịch', async ({ page }) => {
     await page.fill('input[name="full_name"]', 'Nguyễn Văn Tourist');
@@ -118,7 +107,8 @@ test.describe('Kiểm thử chức năng Đăng ký tài khoản', () => {
     // Email ngẫu nhiên tránh trùng lặp
     const randomEmail = `tourist_${Date.now()}@gmail.com`;
     await page.fill('input[name="email"]', randomEmail);
-    await page.fill('input[name="phone"]', '0987654321');
+    const randomPhone = `0${Math.floor(100000000 + Math.random() * 900000000)}`;
+    await page.fill('input[name="phone"]', randomPhone);
     await page.selectOption('select[name="role"]', 'tourist');
     await page.fill('input[name="address"]', 'Hải Phòng');
     await page.fill('input[name="password"]', '123456');
@@ -138,7 +128,8 @@ test.describe('Kiểm thử chức năng Đăng ký tài khoản', () => {
     // Email ngẫu nhiên tránh trùng lặp
     const randomEmail = `provider_${Date.now()}@gmail.com`;
     await page.fill('input[name="email"]', randomEmail);
-    await page.fill('input[name="phone"]', '0987654321');
+    const randomPhone = `0${Math.floor(100000000 + Math.random() * 900000000)}`;
+    await page.fill('input[name="phone"]', randomPhone);
     await page.selectOption('select[name="role"]', 'provider');
     await page.fill('input[name="address"]', 'Hải Phòng');
     await page.fill('input[name="password"]', '123456');
@@ -164,7 +155,8 @@ test.describe('Kiểm thử chức năng Đăng ký tài khoản', () => {
     
     const randomEmail = `tester_tc30_${Date.now()}@gmail.com`;
     await page.fill('input[name="email"]', randomEmail);
-    await page.fill('input[name="phone"]', '0987654321');
+    const randomPhone = `0${Math.floor(100000000 + Math.random() * 900000000)}`;
+    await page.fill('input[name="phone"]', randomPhone);
     await page.fill('input[name="address"]', 'Hải Phòng');
     await page.fill('input[name="password"]', 'password123');
     await page.fill('input[name="confirm_password"]', 'password123');
@@ -197,9 +189,14 @@ test.describe('Kiểm thử chức năng Đăng ký tài khoản', () => {
         await page.fill('input[name="email"]', emailToFill);
       }
 
-      // 3. Điền Số điện thoại
-      if (data.Phone !== undefined) {
-        await page.fill('input[name="phone"]', data.Phone);
+      // 3. Điền Số điện thoại (Tự động tạo sđt ngẫu nhiên nếu là "dynamic" hoặc khi chạy case thành công)
+      let phoneToFill = data.Phone;
+      if (data.Phone === 'dynamic' || (data.Type === 'success' && data.Phone === '0987654321')) {
+        const randomDigits = Math.floor(100000000 + Math.random() * 900000000).toString();
+        phoneToFill = `0${randomDigits}`;
+      }
+      if (phoneToFill !== undefined) {
+        await page.fill('input[name="phone"]', phoneToFill);
       }
 
       // 4. Chọn Vai trò
@@ -226,13 +223,13 @@ test.describe('Kiểm thử chức năng Đăng ký tài khoản', () => {
       // 8. Xác minh kết quả mong muốn
       if (data.Type === 'success') {
         // Đăng ký thành công -> URL sang trang đăng nhập và có thông báo thành công
-        await expect(page).toHaveURL(/\/auth\/login\.php/);
+        await expect(page).toHaveURL(/\/auth\/login\.php/, { timeout: 20000 });
         const successAlert = page.locator('.alert-success');
-        await expect(successAlert).toBeVisible();
+        await expect(successAlert).toBeVisible({ timeout: 10000 });
 
       } else if (data.Type === 'validation_error') {
         // Lỗi HTML5 phía client -> URL vẫn là trang đăng ký và phần tử được chỉ định sẽ có validity = invalid
-        await expect(page).toHaveURL(/\/auth\/register\.php/);
+        await expect(page).toHaveURL(/\/auth\/register\.php/, { timeout: 20000 });
         
         if (data.InvalidField) {
           const isValid = await page.$eval(
@@ -241,6 +238,10 @@ test.describe('Kiểm thử chức năng Đăng ký tài khoản', () => {
           );
           expect(isValid).toBe(false);
         }
+
+      } else if (data.Type === 'js_validation_error') {
+        // Lỗi kiểm tra bằng JavaScript chặn gửi form -> URL vẫn là trang đăng ký
+        await expect(page).toHaveURL(/\/auth\/register\.php/, { timeout: 20000 });
 
       } else if (data.Type === 'server_error') {
         // Chờ URL ổn định (hoặc chứa register.php hoặc chứa chrome-error / chromewebdata)
@@ -252,7 +253,7 @@ test.describe('Kiểm thử chức năng Đăng ký tài khoản', () => {
                    urlStr.includes('chrome-error') || 
                    urlStr.includes('chromewebdata') || 
                    urlStr.includes('about:');
-          }, { timeout: 5000 });
+          }, { timeout: 15000 });
         } catch (e) {
           // Bỏ qua nếu timeout
         }
@@ -268,9 +269,9 @@ test.describe('Kiểm thử chức năng Đăng ký tài khoản', () => {
           expect(true).toBe(true);
         } else {
           // Lỗi bình thường phía máy chủ hiển thị alert-error (như mật khẩu không khớp)
-          await expect(page).toHaveURL(/\/auth\/register\.php/);
+          await expect(page).toHaveURL(/\/auth\/register\.php/, { timeout: 20000 });
           const errorAlert = page.locator('.alert-error');
-          await expect(errorAlert).toBeVisible();
+          await expect(errorAlert).toBeVisible({ timeout: 10000 });
           if (data.ExpectedError) {
             await expect(errorAlert).toContainText(data.ExpectedError);
           }

@@ -1,10 +1,10 @@
 [
   {
     "CaseId": "TC07",
-    "CaseName": "TC07: Đăng ký thành công chỉ với các trường bắt buộc",
+    "CaseName": "TC07: Đăng ký thành công chỉ bỏ trống trường Địa chỉ (trường không bắt buộc)",
     "FullName": "Nguyễn Văn Bắt Buộc",
     "Email": "dynamic",
-    "Phone": "",
+    "Phone": "0987654321",
     "Role": "tourist",
     "Address": "",
     "Password": "password123",
@@ -186,7 +186,8 @@
     "Address": "Hải Phòng",
     "Password": "password123",
     "ConfirmPassword": "password123",
-    "Type": "success"
+    "Type": "validation_error",
+    "InvalidField": "phone"
   },
   {
     "CaseId": "TC22",
@@ -198,7 +199,8 @@
     "Address": "Hải Phòng",
     "Password": "password123",
     "ConfirmPassword": "password123",
-    "Type": "success"
+    "Type": "validation_error",
+    "InvalidField": "phone"
   },
   {
     "CaseId": "TC23",
@@ -210,7 +212,8 @@
     "Address": "Hải Phòng",
     "Password": "password123",
     "ConfirmPassword": "password123",
-    "Type": "success"
+    "Type": "validation_error",
+    "InvalidField": "phone"
   },
   {
     "CaseId": "TC24",
@@ -272,5 +275,17 @@
     "Password": "password123",
     "ConfirmPassword": "password123",
     "Type": "success"
+  },
+  {
+    "CaseId": "TC31",
+    "CaseName": "TC31: Số điện thoại có 10 chữ số trùng nhau hoàn toàn (ví dụ: 0000000000)",
+    "FullName": "Nguyễn Văn A",
+    "Email": "dynamic",
+    "Phone": "0000000000",
+    "Role": "tourist",
+    "Address": "Hải Phòng",
+    "Password": "password123",
+    "ConfirmPassword": "password123",
+    "Type": "js_validation_error"
   }
 ]
