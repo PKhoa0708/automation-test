@@ -18,6 +18,7 @@
 * **Bài 1.1:** Kiến trúc Appium 2.x & Luồng đi của W3C WebDriver Protocol.
 * **Bài 1.2:** Lập trình điều khiển Android qua ADB (Android Debug Bridge Client-Server-Daemon).
 * **Bài 1.3:** Setup biến môi trường OS (`JAVA_HOME`, `ANDROID_HOME`, `PATH`) & Troubleshooting sự cố kết nối.
+* **Bài 1.4:** Tích hợp Appium MCP Server vào AI IDE (Antigravity) để tự động hóa việc soi Locator & lấy XML Page Source trực tiếp trên điện thoại thật.
 
 ---
 
