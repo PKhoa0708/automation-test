@@ -13,6 +13,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <selenium.version>4.21.0</selenium.version>
+        <exec.mainClass>com.automation.Lesson1_1_ArchitectureTest</exec.mainClass>
     </properties>
 
     <dependencyManagement>
@@ -58,7 +59,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.3.0</version>
                 <configuration>
-                    <mainClass>com.automation.Lesson1_1_ArchitectureTest</mainClass>
+                    <mainClass>${exec.mainClass}</mainClass>
                 </configuration>
             </plugin>
             <!-- Maven Surefire Plugin -->
