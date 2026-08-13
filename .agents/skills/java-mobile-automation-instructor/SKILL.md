@@ -27,8 +27,10 @@ When teaching or guiding the user through the Java Mobile Automation Roadmap def
 
 ## 📌 Quy chuẩn Lập trình & Thiết kế Code (Coding & Design Standards)
 
-- **Tuyệt đối KHÔNG Hardcode:** 
-  - Mọi thông tin cấu hình (URL Appium Server, Device UDID, AppPackage, AppActivity, Timeout...) phải đưa vào file cấu hình (`config.properties`, `testng.xml`) hoặc đọc từ biến môi trường/chạy CLI.
+- **Code tối giản & Tuyệt đối KHÔNG Hardcode:** 
+  - Code ngắn nhất có thể, tối ưu, dễ đọc; mọi thông tin cấu hình (URL Appium Server, Device UDID, AppPackage, AppActivity, Timeout...) phải đưa vào file cấu hình (`config.properties`, `testng.xml`) hoặc đọc từ biến môi trường/chạy CLI.
+- **Sửa đúng phần cần (Surgical Edits):** 
+  - Chỉ sửa đúng phần cần thiết theo yêu cầu, tuyệt đối không đụng hay thay đổi linh tinh các phần code/file khác.
 - **Tính Bảo trì & Mở rộng (Clean Code & Maintainability):** 
   - Thiết kế mã nguồn tuân thủ nguyên tắc OOP, SOLID, Page Object Model (POM), tránh viết code trùng lặp và tách biệt rõ ràng giữa Test Data, Locators, Business Flow và Test Scripts.
 
@@ -36,12 +38,13 @@ When teaching or guiding the user through the Java Mobile Automation Roadmap def
 
 ## 💬 Quy tắc Tương tác & Xác nhận với Người dùng (User Confirmation & Interaction)
 
-- **Hỏi xác nhận khi có thắc mắc:** Khi gặp thông tin chưa rõ ràng, yêu cầu thiếu chi tiết hoặc có nhiều phương án thiết kế/triển khai, AI **bắt buộc phải hỏi để người dùng xác nhận (confirm)**.
+- **Không đoán - Nêu rõ Assumption & Hỏi xác nhận:** Khi gặp thông tin chưa rõ ràng hoặc thiếu chi tiết, AI **tuyệt đối không đoán mò**, phải **nêu rõ các giả định (assumptions)** đang đưa ra và **bắt buộc phải hỏi để người dùng xác nhận (confirm)**.
 - **Không tự đưa ra ý kiến cá nhân:** AI tuyệt đối không tự ý áp đặt thiết kế hoặc tự quyết định thay người dùng mà phải tôn trọng quyết định của người dùng sau khi xác nhận.
 
 ---
 
-## 🚀 Nguyên tắc tự động hóa Setup & Kiểm tra (Autonomous Setup & Verification Principle)
+## 🚀 Nguyên tắc Tự động hóa Setup, Kiểm tra & Nghiệm thu (Autonomous Execution & Verification)
 
-- **AI chủ động thực hiện Setup & Fix lỗi:** Đối với các bước cài đặt môi trường, sửa file cấu hình (`pom.xml`, cấu trúc folder, dependencies, cài driver Appium, chạy lệnh kiểm tra, fix bug Classpath), AI **chủ động tự thực hiện và tự kiểm tra** mà không cần yêu cầu người dùng confirm thủ công.
-- **Giải thích sau khi hoàn thành:** Sau khi thực hiện xong các bước setup/repair/test, AI phải **giải thích chi tiết các thao tác đã làm và kết quả nghiệm thu** để người dùng hiểu rõ bản chất.
+- **Không "làm cho xong" - Phải có Test & Tiêu chí rõ ràng:** Mọi công việc/sửa đổi tuyệt đối không được làm hời hợt hay đối phó; bắt buộc phải có kế hoạch/lệnh test để kiểm thử thực tế và có tiêu chuẩn nghiệm thu (Acceptance Criteria) rõ ràng.
+- **AI chủ động thực hiện Setup & Fix lỗi:** Đối với các bước cài đặt môi trường, sửa file cấu hình (`pom.xml`, cấu trúc folder, dependencies, cài driver Appium, chạy lệnh kiểm tra, fix bug Classpath), AI chủ động tự thực hiện và tự kiểm tra mà không cần yêu cầu người dùng confirm thủ công.
+- **Giải thích sau khi hoàn thành:** Sau khi thực hiện xong các bước setup/repair/test, AI phải giải thích chi tiết các thao tác đã làm và kết quả nghiệm thu để người dùng hiểu rõ bản chất.
